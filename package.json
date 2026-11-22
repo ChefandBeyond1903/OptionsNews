@@ -1,1 +1,1 @@
-{"name":"options-news","version":"1.0.0","type":"module","scripts":{"start":"node local.js"},"dependencies":{"@vercel/functions":"^3.11.3"}}
+{"name":"options-news","version":"1.0.0","type":"module","scripts":{"start":"node local.js"}}
