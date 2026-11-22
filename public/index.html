@@ -102,7 +102,7 @@ dl{margin:12px 0 0;display:grid;grid-template-columns:130px 1fr;gap:8px 14px;fon
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const ET=()=>Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'America/Chicago',weekday:'short',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date()).map(x=>[x.type,x.value]));
-let last=null,tab=null;
+let last=null,tab=null,HAS_PAPER=false;   // practice trading only exists on the local server
 
 function clock(){
   const p=ET(),day=p.weekday,m=(+p.hour%24)*60+ +p.minute,wd=!['Sat','Sun'].includes(day);
@@ -214,7 +214,7 @@ function card(r,n){
    <li><div><b>BE OUT BY</b><span>Thursday 2:30 PM CT, win or lose.</span></div></li></ol>
   ${chart(r)}
   ${r.notes.length?`<div class="chips">${r.notes.map(n=>`<span class="w">⚠ ${esc(n)}</span>`).join('')}</div>`:''}
-  <div style="display:flex;gap:8px"><button style="flex:1" onclick="arm('${r.symbol}',this)">🧪 Practice this trade</button><button class="more" style="flex:1" onclick="this.closest('.card').classList.toggle('open')">Show details</button></div>
+  <div style="display:flex;gap:8px">${HAS_PAPER?`<button style="flex:1" onclick="arm('${r.symbol}',this)">🧪 Practice this trade</button>`:''}<button class="more" style="flex:1" onclick="this.closest('.card').classList.toggle('open')">Show details</button></div>
   <div class="det">
    <h4>Position size for your account</h4>${sizing(i)}
    <h4>Signals (left = bearish, right = bullish)</h4>${bar('Trend',r.factors.trend)}${bar('Momentum',r.factors.momentum)}${bar('vs. market',r.factors.relStrength)}${bar('Volume',r.factors.volume)}${bar('Breakout',r.factors.breakout)}${bar('News',r.factors.news)}${bar('Market',r.factors.market)}
@@ -238,7 +238,7 @@ function render(){
     <div class="stats"><div class="stat">S&amp;P 500 (SPY)<b>$${m.spyPrice.toFixed(2)}</b></div><div class="stat">Last 20 days<b class="${m.spyRet20>=0?'pos':'neg'}">${m.spyRet20>=0?'+':''}${m.spyRet20.toFixed(1)}%</b></div><div class="stat">Fear gauge (VIX)<b>${m.vix?m.vix.toFixed(1):'n/a'}</b></div><div class="stat">Calls / Puts found<b>${calls.length} / ${puts.length}</b></div></div></div>`;
   }
   if(!tab||!{CALL:1,PUT:1,SKIP:1,PRACTICE:1}[tab])tab=puts.length&&(!calls.length||(mode!=='win'?sc(puts[0])>sc(calls[0]):puts[0].rankScore>calls[0].rankScore))?'PUT':calls.length?'CALL':'PUT';
-  $('tabs').innerHTML=[['CALL','📈 Calls (go up)',calls],['PUT','📉 Puts (go down)',puts],['SKIP','Skip',skip],['PRACTICE','🧪 Practice',null]].map(([k,l,a])=>`<button class="tab ${k} ${tab===k?'on':''}" onclick="tab='${k}';render()">${l}${a?`<small>${a.length}</small>`:''}</button>`).join('');
+  $('tabs').innerHTML=[['CALL','📈 Calls (go up)',calls],['PUT','📉 Puts (go down)',puts],['SKIP','Skip',skip],...(HAS_PAPER?[['PRACTICE','🧪 Practice',null]]:[])].map(([k,l,a])=>`<button class="tab ${k} ${tab===k?'on':''}" onclick="tab='${k}';render()">${l}${a?`<small>${a.length}</small>`:''}</button>`).join('');
   if(tab==='PRACTICE'){loadPaper();return}
   const list={CALL:calls,PUT:puts,SKIP:skip}[tab];
   const tail=mode==='cheap'?'Strong signals first; within each strength level, the cheapest trade first.':mode==='roi'?'Most possible profit for each dollar spent, first.':mode==='best'?'Biggest possible dollar gain first.':'Most winnable first.';
@@ -297,5 +297,6 @@ async function run(){
   $('go').textContent='Scan';
 }
 $('go').onclick=run;$('t').addEventListener('keydown',e=>{if(e.key==='Enter')run()});$('acct').oninput=$('risk').oninput=$('sort').onchange=$('afford').onchange=render;
+fetch('/api/paper').then(r=>{HAS_PAPER=r.ok;if(last)render()}).catch(()=>{});
 clock();setInterval(clock,30000);run();
 </script></body></html>
