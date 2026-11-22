@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Options News</title>
+<style>
+:root{--bg:#0b0e14;--bg2:#10141c;--card:#151a24;--bd:#232b3a;--tx:#eef2f8;--mut:#8f9bb0;--g:#34d399;--r:#f87171;--y:#fbbf24;--acc:#7c8cff;--sh:0 8px 30px rgba(0,0,0,.35)}
+@media(prefers-color-scheme:light){:root{--bg:#f4f6fb;--bg2:#fff;--card:#fff;--bd:#e3e8f1;--tx:#131a2a;--mut:#64708a;--g:#059669;--r:#dc2626;--y:#b45309;--acc:#4f5df0;--sh:0 8px 30px rgba(20,30,60,.08)}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(1200px 500px at 50% -200px,color-mix(in srgb,var(--acc) 14%,transparent),transparent),var(--bg);color:var(--tx);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:1080px;margin:0 auto;padding:24px 16px 60px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.logo{font-weight:800;font-size:20px;letter-spacing:-.02em}.logo b{color:var(--acc)}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border:1px solid var(--bd);background:var(--card);border-radius:999px;font-size:13px;color:var(--mut)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mut)}.dot.g{background:var(--g);box-shadow:0 0 0 4px color-mix(in srgb,var(--g) 25%,transparent)}.dot.y{background:var(--y)}.dot.r{background:var(--r)}
+.hero{background:linear-gradient(135deg,color-mix(in srgb,var(--c) 18%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--c) 35%,var(--bd));border-radius:20px;padding:22px 24px;box-shadow:var(--sh);margin-bottom:18px}
+.hero h1{margin:0 0 6px;font-size:26px;letter-spacing:-.02em}.hero p{margin:0;color:var(--mut);max-width:720px}
+.hero .stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.stat{background:color-mix(in srgb,var(--bg) 50%,transparent);border:1px solid var(--bd);border-radius:12px;padding:8px 12px;font-size:13px}.stat b{display:block;font-size:16px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-bottom:18px}
+.field{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--mut)}
+select{padding:10px 12px;background:var(--card);border:1px solid var(--bd);color:var(--tx);border-radius:10px;font:inherit}input{padding:10px 12px;background:var(--card);border:1px solid var(--bd);color:var(--tx);border-radius:10px;font:inherit;outline:none}input:focus{border-color:var(--acc)}
+.grow{flex:1;min-width:220px}.sm{width:110px}
+button{font:inherit;padding:10px 18px;border-radius:10px;border:0;background:var(--acc);color:#fff;font-weight:600;cursor:pointer}button:hover{filter:brightness(1.1)}
+.tabs{display:flex;gap:6px;background:var(--bg2);border:1px solid var(--bd);padding:4px;border-radius:14px;width:max-content;max-width:100%;margin-bottom:16px;overflow-x:auto}
+.tab{background:none;color:var(--mut);padding:8px 16px;border-radius:10px;white-space:nowrap}.tab.on{background:var(--card);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.tab small{margin-left:6px;padding:1px 7px;border-radius:99px;background:var(--bd);font-size:12px}
+.tab.CALL.on small{background:color-mix(in srgb,var(--g) 25%,transparent);color:var(--g)}.tab.PUT.on small{background:color-mix(in srgb,var(--r) 25%,transparent);color:var(--r)}
+.lead{color:var(--mut);margin:0 0 16px;max-width:760px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:16px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:18px;box-shadow:var(--sh);display:flex;flex-direction:column;gap:14px}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.tk{font-size:22px;font-weight:800;letter-spacing:-.02em}.px{color:var(--mut);font-size:13px}
+.conf{text-align:right;font-size:12px;color:var(--mut)}.conf b{display:block;font-size:15px;color:var(--tx)}
+.meter{width:110px;height:6px;border-radius:9px;background:var(--bd);margin:5px 0 0 auto;overflow:hidden}.meter i{display:block;height:100%;border-radius:9px;background:var(--c)}
+.why{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:3px;font-size:14px}.why li:before{content:"✓";color:var(--c);font-weight:700;margin-right:8px}
+.buy{background:color-mix(in srgb,var(--c) 10%,var(--bg2));border:1px solid color-mix(in srgb,var(--c) 30%,var(--bd));border-radius:14px;padding:12px 14px}
+.buy .big{font-size:17px;font-weight:700}.buy .sub{color:var(--mut);font-size:13px}
+.steps{display:flex;flex-direction:column;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:flex;gap:12px;counter-increment:s;font-size:14px}
+.steps li:before{content:counter(s);flex:none;width:24px;height:24px;border-radius:50%;background:var(--bd);display:grid;place-items:center;font-size:12px;font-weight:700}
+.steps b{display:block;font-size:13px}.steps span{color:var(--mut)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.w{font-size:12px;padding:3px 9px;border-radius:99px;background:color-mix(in srgb,var(--y) 15%,transparent);color:var(--y)}
+.more{background:none;border:1px solid var(--bd);color:var(--mut);padding:8px;font-weight:500}.more:hover{filter:none;color:var(--tx);border-color:var(--mut)}
+.det{display:none;border-top:1px solid var(--bd);padding-top:14px;font-size:13px}.open .det{display:block}
+.det h4{margin:14px 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut)}.det h4:first-child{margin-top:0}
+.f{display:flex;align-items:center;gap:8px;margin:4px 0}.f>span:first-child{width:104px;color:var(--mut)}
+.track{flex:1;height:6px;background:var(--bd);border-radius:4px;position:relative}.fill{position:absolute;top:0;height:6px;border-radius:4px}
+.kv{display:flex;justify-content:space-between;padding:3px 0}.kv span:first-child{color:var(--mut)}
+.h{display:flex;gap:8px;padding:3px 0}.h .s{width:30px;text-align:right;font-weight:600;flex:none}.h a{color:inherit;text-decoration:none}.h a:hover{text-decoration:underline}
+.pos{color:var(--g)}.neg{color:var(--r)}
+.empty{padding:40px 20px;text-align:center;color:var(--mut);background:var(--card);border:1px dashed var(--bd);border-radius:18px}
+.skeleton{height:260px;border-radius:18px;background:linear-gradient(90deg,var(--card),var(--bg2),var(--card));background-size:200% 100%;animation:sh 1.4s infinite}@keyframes sh{to{background-position:-200% 0}}
+.chart{width:100%;height:auto;display:block;background:var(--bg2);border:1px solid var(--bd);border-radius:12px}
+.chart text{font:12px Inter,system-ui,sans-serif;fill:var(--tx)}.chart text.m{fill:var(--mut);font-weight:400}
+.chart .pl-line{stroke:var(--tx);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.chart .lv{stroke-width:1.5;stroke-dasharray:5 4}.chart .ld{fill:none;stroke-width:1}
+.chart .lv.acc,.chart .ld.acc{stroke:var(--acc)}.chart .lv.g,.chart .ld.g{stroke:var(--g)}.chart .lv.r,.chart .ld.r{stroke:var(--r)}.chart .ld.mut{stroke:var(--mut)}
+.chart .sq.acc{fill:var(--acc)}.chart .sq.g{fill:var(--g)}.chart .sq.r{fill:var(--r)}.chart .sq.mut{fill:var(--tx)}
+.chart .zone{fill:var(--acc);opacity:.16}.chart .dotnow{fill:var(--tx);stroke:var(--bg2);stroke-width:2}
+.chart .cross{stroke:var(--mut);stroke-width:1}.chart .tip{font-weight:600}
+.scen{border:1px solid var(--bd);border-radius:14px;padding:12px 14px;background:var(--bg2)}
+.sh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.sr{margin-bottom:10px}.st{display:flex;justify-content:space-between;gap:8px;font-size:14px}.st small{color:var(--mut);font-weight:500}
+.bt{height:6px;border-radius:4px;background:var(--bd);margin:5px 0 4px;overflow:hidden}.bt i{display:block;height:100%;border-radius:4px}
+.psec{margin:26px 0 10px}.psec h3{margin:0;font-size:16px}.psec small{margin-left:6px;padding:1px 8px;border-radius:99px;background:var(--bd);color:var(--mut);font-size:12px;font-weight:600}
+.rows{display:flex;flex-direction:column;gap:10px}
+.rw{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--c);border-radius:14px;padding:14px 16px}
+.rl{display:flex;flex-direction:column;gap:6px;align-items:flex-start;min-width:84px}.rt{font-size:18px;letter-spacing:-.01em}
+.pill{font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px}
+.rm{flex:1;min-width:0}.rh{font-weight:600;margin-bottom:3px}.rs{color:var(--mut);font-size:13px;line-height:1.55}.rs b{color:var(--tx)}
+.rr{display:flex;flex-direction:column;align-items:flex-end;gap:8px}.pl{font-size:20px;font-weight:800;letter-spacing:-.02em}
+@media(max-width:620px){.rw{flex-wrap:wrap}.rr{flex-direction:row;align-items:center;width:100%;justify-content:space-between}}
+.logl{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:6px 14px}.logl div{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--bd);font-size:13px}.logl div:last-child{border:0}.logl em{margin-left:auto;color:var(--mut);font-style:normal;white-space:nowrap}
+.swrow{display:flex;align-items:center;gap:12px;cursor:pointer;font-size:14px}
+.sw{position:relative;width:42px;height:24px;flex:none}.sw input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;z-index:1}.sw i{position:absolute;inset:0;border-radius:99px;background:var(--bd);transition:.2s}
+.sw i:after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}.sw input:checked+i{background:var(--g)}.sw input:checked+i:after{left:21px}
+details{margin-top:36px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 16px}summary{cursor:pointer;font-weight:600}
+dl{margin:12px 0 0;display:grid;grid-template-columns:130px 1fr;gap:8px 14px;font-size:14px}dt{font-weight:600}dd{margin:0;color:var(--mut)}
+.disc{font-size:12px;color:var(--mut);margin-top:18px}
+</style></head><body><main>
+<div class="head"><div class="logo">Options<b>News</b></div><div class="chip" id="clock"></div></div>
+<div id="hero"></div>
+<div class="tools">
+  <label class="field grow">Stocks to scan (leave empty for the default list)<input id="t" placeholder="AAPL, TSLA, NVDA…"></label>
+  <label class="field">Account size $<input id="acct" class="sm" type="number" value="5000"></label>
+  <label class="field">Risk per trade %<input id="risk" class="sm" type="number" value="2" step="0.5"></label>
+  <label class="field">Sort by<select id="sort" class="sm" style="width:auto"><option value="cheap">Strong signal, cheapest first</option><option value="roi">Most profit per $ spent</option><option value="best">Biggest best case ($)</option><option value="win">Most winnable</option></select></label><label class="field">&nbsp;<span class="chip" style="padding:9px 12px;border-radius:10px"><input type="checkbox" id="afford" style="width:auto;padding:0"> Only trades I can afford</span></label><button id="go">Scan</button>
+</div>
+<div class="tabs" id="tabs"></div>
+<div id="out"></div>
+<details><summary>What do these words mean?</summary><dl>
+<dt>Call</dt><dd>A bet the stock goes UP. You profit if it rises enough before the option expires.</dd>
+<dt>Put</dt><dd>A bet the stock goes DOWN. You profit if it falls enough.</dd>
+<dt>Strike</dt><dd>The price line the option is based on.</dd>
+<dt>Premium / Cost</dt><dd>What you pay for the option. One contract = 100 shares, so a $6 premium costs $600. This is the most you can lose when buying.</dd>
+<dt>Confidence</dt><dd>How many of the signals (trend, momentum, volume, market, news) agree. It is not a probability of winning.</dd>
+<dt>VIX</dt><dd>The market's "fear gauge." Above 25 means big swings and expensive options.</dd>
+<dt>Expiry</dt><dd>The date the option stops existing. Weekly options lose value fast, so don't hold them to expiry.</dd></dl></details>
+<div class="disc">Signals come from trend, momentum, strength vs. the market, volume, breakouts, news sentiment and overall market conditions, with live option prices when available. This is not financial advice. A bought option can lose 100% of its cost. Only risk money you can afford to lose.</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ET=()=>Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'America/Chicago',weekday:'short',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+let last=null,tab=null;
+
+function clock(){
+  const p=ET(),day=p.weekday,m=(+p.hour%24)*60+ +p.minute,wd=!['Sat','Sun'].includes(day);
+  let c='r',t;
+  if(!wd||m>=900||m<510)t='Market closed · opens Mon–Fri 8:30 AM CT';
+  else if(m<540){c='y';t='Open · wait until 9:00 AM CT to trade'}
+  else if(m<630){c='g';t='Best time to buy (9:00–10:30 AM CT)'}
+  else if(m<750){c='y';t='Midday lull · avoid new trades'}
+  else if(m<870){c='y';t='Afternoon · okay for exits'}
+  else{c='y';t='Final 30 min · close, don\'t open'}
+  $('clock').innerHTML=`<span class="dot ${c}"></span>${day} ${p.hour}:${p.minute} CT · ${t}`;
+}
+
+const REASONS={
+  trend:['Stock is in an uptrend','Stock is in a downtrend'],
+  momentum:['Rising steadily lately','Falling steadily lately'],
+  relStrength:['Stronger than the overall market','Weaker than the overall market'],
+  volume:['Heavy buying volume backs the move','Heavy selling volume backs the move'],
+  breakout:['Just broke above its 20-day high','Just broke below its 20-day low'],
+  news:['Recent news is mostly positive','Recent news is mostly negative'],
+  market:['The overall market is rising','The overall market is falling']};
+function reasons(r){
+  const d=r.signal==='CALL'?1:-1;
+  return Object.entries(r.factors).filter(([k,v])=>v!=null&&Math.sign(v)===d&&Math.abs(v)>=.3).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).slice(0,4).map(([k])=>REASONS[k][d>0?0:1]);
+}
+const bar=(l,v)=>v==null?'':`<div class="f"><span>${l}</span><div class="track"><div class="fill" style="background:var(--${v>=0?'g':'r'});${v>=0?'left:50%':'right:50%'};width:${Math.abs(v)*50}%"></div></div></div>`;
+const kv=(a,b)=>`<div class="kv"><span>${a}</span><span>${b}</span></div>`;
+function sizing(i){
+  const risk=$('acct').value*$('risk').value/100,n=Math.floor(risk/i.costPerContract);
+  return n>0?`<b>${n} contract${n>1?'s':''}</b> ($${n*i.costPerContract} at risk)`:`<span class="neg">1 contract ($${i.costPerContract}) is above your $${risk.toFixed(0)} risk limit</span>`;
+}
+function whenText(){
+  const p=ET(),m=(+p.hour%24)*60+ +p.minute,wk=['Sat','Sun'].includes(p.weekday)||(p.weekday==='Fri'&&m>=540);
+  return wk?'Monday, after 9:00 AM CT':m>=870?'Next trading day, after 9:00 AM CT':m<540?'Today, after 9:00 AM CT':'Tomorrow after 9:00 AM CT (today\'s best window is ending)';
+}
+/* Price-ladder chart: last 30 days + buy zone + sell-half / sell-rest / get-out levels */
+function chart(r){
+  const t=r.timing,i=r.idea,h=(r.history||[]).slice(-15);if(!t||!i||h.length<5)return '';
+  const W=560,H=300,L=8,R=172,T=14,B=24,pw=W-L-R,ph=H-T-B;
+  const lv=[{v:t.trigger,lab:'BUY',c:'acc'},{v:t.sellHalf,lab:'SELL HALF',c:'g'},{v:i.target,lab:'SELL REST',c:'g'},{v:i.stop,lab:'GET OUT',c:'r'}];
+  const all=[...h,...lv.map(x=>x.v),t.chaseLimit,r.price];
+  let lo=Math.min(...all),hi=Math.max(...all);const pad=(hi-lo)*.07;lo-=pad;hi+=pad;
+  const y=v=>T+(hi-v)/(hi-lo)*ph,x=k=>L+k/(h.length-1)*pw;
+  const pts=h.map((v,k)=>x(k).toFixed(1)+','+y(v).toFixed(1)).join(' ');
+  const lab=[...lv.map(l=>({...l,y0:y(l.v)})),{v:r.price,lab:'NOW',c:'mut',y0:y(r.price)}].map(l=>({...l,y:l.y0})).sort((a,b)=>a.y-b.y);
+  for(let k=1;k<lab.length;k++)if(lab[k].y-lab[k-1].y<16)lab[k].y=lab[k-1].y+16;
+  const zt=Math.min(y(t.trigger),y(t.chaseLimit)),zh=Math.abs(y(t.trigger)-y(t.chaseLimit));
+  const lines=lab.filter(l=>l.lab!=='NOW').map(l=>`<line x1="${L}" x2="${L+pw}" y1="${l.y0}" y2="${l.y0}" class="lv ${l.c}"/>`).join('');
+  const tags=lab.map(l=>{const now=l.lab==='NOW';return `<path d="M${L+pw} ${l.y0}L${W-R+6} ${l.y}" class="ld ${l.c}"/><rect x="${W-R+8}" y="${l.y-5}" width="9" height="9" rx="2" class="sq ${l.c}"/><text x="${W-R+22}" y="${l.y+4}"${now?' class="m"':''}><tspan font-weight="700">${l.lab}</tspan> $${l.v.toFixed(2)}</text>`}).join('');
+  const desc=`${r.symbol} price chart. Buy ${t.trigger}, sell half about ${t.sellHalf}, sell the rest ${i.target}, get out ${i.stop}. Current price ${r.price.toFixed(2)}.`;
+  return `<div><svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="${desc}" data-h='${JSON.stringify(h)}' data-lo="${lo}" data-hi="${hi}" onmousemove="hov(event,this)" onmouseleave="this.querySelector('.hv').style.display='none'">
+   <rect x="${L}" y="${zt}" width="${pw}" height="${Math.max(zh,2)}" class="zone"/>${lines}
+   <polyline points="${pts}" fill="none" class="pl-line"/>
+   <circle cx="${x(h.length-1)}" cy="${y(r.price)}" r="4.5" class="dotnow"/>${tags}
+   <text x="${L}" y="${H-6}" class="m">15 days ago</text><text x="${L+pw}" y="${H-6}" text-anchor="end" class="m">today</text>
+   <g class="hv" style="display:none"><line y1="${T}" y2="${T+ph}" class="cross"/><circle r="4" class="dotnow"/><text class="tip"></text></g>
+  </svg><div class="px" style="margin-top:2px">Shaded band = where to buy. Dashed lines = price levels (sell-half is where the option is about +50%). Line = last 15 days.</div></div>`;
+}
+function hov(ev,svg){
+  const h=JSON.parse(svg.dataset.h),lo=+svg.dataset.lo,hi=+svg.dataset.hi,W=560,H=300,L=8,R=172,T=14,B=24,pw=W-L-R,ph=H-T-B,b=svg.getBoundingClientRect();
+  let k=Math.round(((ev.clientX-b.left)/b.width*W-L)/pw*(h.length-1));k=Math.max(0,Math.min(h.length-1,k));
+  const px=L+k/(h.length-1)*pw,py=T+(hi-h[k])/(hi-lo)*ph,g=svg.querySelector('.hv');g.style.display='';
+  const ln=g.querySelector('line');ln.setAttribute('x1',px);ln.setAttribute('x2',px);
+  const c=g.querySelector('circle');c.setAttribute('cx',px);c.setAttribute('cy',py);
+  const tx=g.querySelector('text');tx.textContent=`$${h[k].toFixed(2)} · ${h.length-1-k?h.length-1-k+' days ago':'latest close'}`;
+  tx.setAttribute('x',px>pw*.6?px-8:px+8);tx.setAttribute('text-anchor',px>pw*.6?'end':'start');tx.setAttribute('y',Math.max(T+12,py-10));
+}
+/* Dollar outcomes for the position the risk settings allow */
+function plan(r){
+  const i=r.idea,t=r.timing;if(!i||!t)return null;
+  const acct=+$('acct').value||0,risk=acct*$('risk').value/100,cost=i.costPerContract,fee=0.65;
+  let n=Math.floor(risk/cost);const over=n<1;if(over)n=1;
+  const p=i.premium,dir=i.type==='CALL'?1:-1,spent=n*cost,fees=n*2*fee;
+  const tv=Math.max(0,dir*(i.target-i.strike)),a=n>=2?Math.floor(n/2):0,rest=n-a;
+  const rows=[
+    {ic:'🎯',t:'Best case',d:a?`Sell ${a} at $${(p*1.5).toFixed(2)} (stock ≈ $${t.sellHalf}), then ${rest} when the stock reaches $${i.target}`:`Sell the ${n} contract when the stock reaches $${i.target}`,v:a*(p*.5)*100+rest*(tv-p)*100-fees},
+    {ic:a?'✅':'➖',t:a?'Small win':'Breakeven',d:a?`Hits +50%, you sell ${a}, then it reverses and the rest exits at breakeven`:'Reaches +50%, then falls back: you exit near breakeven',v:a?a*(p*.5)*100-fees:-fees},
+    {ic:'🛑',t:'Stop loss',d:`Option falls 40% (to $${(p*.6).toFixed(2)}) or the stock hits $${i.stop}`,v:-0.4*spent-fees},
+    {ic:'💥',t:'Worst case',d:'Option expires worthless (you should exit before this)',v:-spent-n*fee}];
+  return {i,t,acct,risk,n,over,spent,rows,best:rows[0].v};
+}
+function scen(r){
+  const P=plan(r);if(!P)return '';const {i,t,acct,risk,n,over,spent,rows}=P;
+  const mx=Math.max(...rows.map(x=>Math.abs(x.v)));
+  return `<div class="scen"><div class="sh"><b>💰 If you spend ${usd(spent)}</b><span class="px">${n} contract${n>1?'s':''} · ${acct?(spent/acct*100).toFixed(1):'–'}% of your account</span></div>
+  ${over?`<div class="w" style="margin-bottom:8px;display:inline-block">1 contract costs more than your ${$('risk').value}% risk limit (${usd(risk)}). Skip it or raise the limit.</div>`:''}
+  ${rows.map(x=>`<div class="sr"><div class="st"><span>${x.ic} <b>${x.t}</b></span><span class="${cls(x.v)}"><b>${x.v>=0?'+':''}${usd(x.v)}</b>${x.t==='Best case'?` <small>(≈$${(x.v/spent+1).toFixed(2)} back per $1)</small>`:''} <small>(${x.v>=0?'+':''}${Math.abs(x.v/spent*100)<1?(x.v/spent*100).toFixed(1):(x.v/spent*100).toFixed(0)}%)</small></span></div>
+   <div class="bt"><i style="width:${Math.abs(x.v)/mx*100}%;background:var(--${x.v>=0?'g':'r'})"></i></div><div class="px">${x.d}</div></div>`).join('')}
+  <div class="px" style="margin-top:6px">Estimates after $0.65/contract fees. Best case counts the option at its value at the target price; real prices can differ and fills can be worse. Nothing here is guaranteed${r.backtest?`. This stock's signal was right ${r.backtest.hitRate}% of the time over the past year`:''}.</div></div>`;
+}
+function card(r,n){
+  if(r.error)return '';
+  const badge=n===0?'<span class="w" style="background:color-mix(in srgb,var(--acc) 20%,transparent);color:var(--acc);font-weight:700;margin-left:8px;vertical-align:middle">⭐ #1 '+({cheap:'strongest + cheapest',roi:'most profit per $',best:'biggest best case',win:'most winnable'}[$('sort').value])+'</span>':n<3?`<span class="w" style="background:var(--bd);color:var(--mut);margin-left:8px;vertical-align:middle">#${n+1}</span>`:'';
+  const i=r.idea,t=r.timing,call=r.signal==='CALL',c=call?'var(--g)':'var(--r)',b=r.backtest;
+  const lvl=r.confidence>=75?'Strong':r.confidence>=55?'Good':'Weak';
+  if(!i||!t)return `<div class="card" style="--c:var(--y)"><div class="ch"><div><div class="tk">${r.symbol}</div><div class="px">$${r.price.toFixed(2)}</div></div><div class="conf">Mixed signals</div></div><div class="px">Signals disagree. Skip.</div></div>`;
+  return `<div class="card" style="--c:${c}">
+  <div class="ch"><div><div class="tk">${r.symbol}${badge}</div><div class="px">$${r.price.toFixed(2)} · ${r.ret5>=0?'+':''}${r.ret5.toFixed(1)}% this week</div></div>
+   <div class="conf"><b>${lvl} · ${r.confidence}%</b>signal strength<div class="meter"><i style="width:${r.confidence}%"></i></div></div></div>
+  <ul class="why">${reasons(r).map(x=>`<li>${x}</li>`).join('')}</ul>
+  <div class="buy"><div class="big">Buy 1 ${i.type} · $${i.strike} strike</div>
+   <div class="sub">Expires ${i.expiry} · costs about <b>$${i.costPerContract}</b> per contract (max loss)</div>
+   <div class="sub" style="margin-top:6px">${i.bid!=null?`Quoted bid/ask $${i.bid} / $${i.ask}. `:''}${i.source==='market'&&i.verified?'':'<b class="neg">Estimated price: this strike may not trade.</b> '}<b>Confirm this exact strike, expiry and price in thinkorswim before ordering.</b> Prices here come from Yahoo Finance and can be delayed or differ.</div></div>
+  ${scen(r)}
+  <ol class="steps">
+   <li><div><b>BUY</b>${whenText()}, <u>only if</u> ${r.symbol} trades ${call?'above':'below'} <strong>$${t.trigger}</strong>. If it's already past $${t.chaseLimit}, skip it.</div></li>
+   <li><div><b>TAKE PROFIT</b><span>Sell half when the option reaches $${(i.premium*1.5).toFixed(2)} (+50%). Sell the rest near stock $${i.target}.</span></div></li>
+   <li><div><b>CUT LOSS</b><span>Sell if the option falls to $${(i.premium*.6).toFixed(2)} (−40%) or the stock hits $${i.stop}.</span></div></li>
+   <li><div><b>BE OUT BY</b><span>Thursday 2:30 PM CT, win or lose.</span></div></li></ol>
+  ${chart(r)}
+  ${r.notes.length?`<div class="chips">${r.notes.map(n=>`<span class="w">⚠ ${esc(n)}</span>`).join('')}</div>`:''}
+  <div style="display:flex;gap:8px"><button style="flex:1" onclick="arm('${r.symbol}',this)">🧪 Practice this trade</button><button class="more" style="flex:1" onclick="this.closest('.card').classList.toggle('open')">Show details</button></div>
+  <div class="det">
+   <h4>Position size for your account</h4>${sizing(i)}
+   <h4>Signals (left = bearish, right = bullish)</h4>${bar('Trend',r.factors.trend)}${bar('Momentum',r.factors.momentum)}${bar('vs. market',r.factors.relStrength)}${bar('Volume',r.factors.volume)}${bar('Breakout',r.factors.breakout)}${bar('News',r.factors.news)}${bar('Market',r.factors.market)}
+   <h4>Option contract</h4>${kv('Breakeven (stock price)','$'+i.breakeven)}${kv('Reward vs. risk',i.rewardRisk!=null?i.rewardRisk+' : 1':'n/a')}${kv('Implied volatility',i.iv+'%')}${kv('Delta',i.delta)}${i.bid!=null?kv('Bid / ask',`${i.bid} / ${i.ask}`):''}${i.volume!=null?kv('Volume / open interest',`${i.volume} / ${i.openInterest??'?'}`):''}${kv('Price source',i.source==='market'?'Live option chain':'Estimated')}
+   <h4>Context</h4>${kv('Earnings',r.earningsDays!=null&&r.earningsDays>=0?'in '+r.earningsDays+' days':'not soon')}${kv('Past year accuracy',b?`${b.hitRate}% of ${b.signals} signals`:'n/a')}${kv('Volatility rank',r.hvRank+'/100')}${kv('RSI',r.rsi.toFixed(0))}
+   <h4>Latest news</h4>${r.headlines.map(h=>`<div class="h"><span class="s ${h.sentiment>0?'pos':h.sentiment<0?'neg':''}">${h.sentiment>0?'+':''}${h.sentiment.toFixed(1)}</span><a href="${esc(h.link)}" target="_blank" rel="noopener">${esc(h.title)}</a></div>`).join('')||'<span class="px">None this week</span>'}
+  </div></div>`;
+}
+
+function render(){
+  if(!last)return;
+  const ok=last.results.filter(r=>!r.error).sort((a,b)=>(b.rankScore||0)-(a.rankScore||0)||b.confidence-a.confidence),m=last.market;
+  const afford=$('afford').checked,mode=$('sort').value,sc=r=>{const P=plan(r);const tier=r.confidence>=75?2:r.confidence>=55?1:0;return mode==='cheap'?tier*1e6-P.spent:mode==='best'?P.best:mode==='roi'?P.best/P.spent:r.rankScore||0};
+  const by=s=>{let x=ok.filter(r=>r.signal===s&&(s==='NEUTRAL'||r.idea));if(s!=='NEUTRAL'){if(afford)x=x.filter(r=>!plan(r).over);if(mode!=='win')x=x.sort((p,q)=>sc(q)-sc(p))}return x};
+  const calls=by('CALL'),puts=by('PUT'),skip=by('NEUTRAL');
+  if(m){
+    const bull=m.regime>.3,bear=m.regime<-.3,c=bull?'var(--g)':bear?'var(--r)':'var(--y)';
+    $('hero').innerHTML=`<div class="hero" style="--c:${c}"><h1>${bull?'Market is rising: favor CALLS':bear?'Market is falling: favor PUTS':'Market is mixed: be selective'}</h1>
+    <p>${bull?'Most stocks are being pulled up. Trades that bet on a rise have the wind at their back.':bear?'Most stocks are being pulled down. Trades that bet on a fall have the wind at their back, and calls are risky right now.':'No clear direction. Only take the strongest setups with smaller size.'}
+    ${m.vix>25?' Fear is high (VIX '+m.vix.toFixed(0)+'), so prices swing hard and options cost more. Use smaller size.':''}</p>
+    <div class="stats"><div class="stat">S&amp;P 500 (SPY)<b>$${m.spyPrice.toFixed(2)}</b></div><div class="stat">Last 20 days<b class="${m.spyRet20>=0?'pos':'neg'}">${m.spyRet20>=0?'+':''}${m.spyRet20.toFixed(1)}%</b></div><div class="stat">Fear gauge (VIX)<b>${m.vix?m.vix.toFixed(1):'n/a'}</b></div><div class="stat">Calls / Puts found<b>${calls.length} / ${puts.length}</b></div></div></div>`;
+  }
+  if(!tab||!{CALL:1,PUT:1,SKIP:1,PRACTICE:1}[tab])tab=puts.length&&(!calls.length||(mode!=='win'?sc(puts[0])>sc(calls[0]):puts[0].rankScore>calls[0].rankScore))?'PUT':calls.length?'CALL':'PUT';
+  $('tabs').innerHTML=[['CALL','📈 Calls (go up)',calls],['PUT','📉 Puts (go down)',puts],['SKIP','Skip',skip],['PRACTICE','🧪 Practice',null]].map(([k,l,a])=>`<button class="tab ${k} ${tab===k?'on':''}" onclick="tab='${k}';render()">${l}${a?`<small>${a.length}</small>`:''}</button>`).join('');
+  if(tab==='PRACTICE'){loadPaper();return}
+  const list={CALL:calls,PUT:puts,SKIP:skip}[tab];
+  const tail=mode==='cheap'?'Strong signals first; within each strength level, the cheapest trade first.':mode==='roi'?'Most possible profit for each dollar spent, first.':mode==='best'?'Biggest possible dollar gain first.':'Most winnable first.';
+  const lead={CALL:'Stocks likely to rise this week. Buy a CALL on these. '+tail,PUT:'Stocks likely to fall this week. Buy a PUT on these. '+tail,SKIP:'Signals disagree on these, so there is no clear edge. Best to pass.'}[tab];
+  const open=new Set([...document.querySelectorAll('.card.open .tk')].map(e=>e.textContent));
+  $('out').innerHTML=`<p class="lead">${lead}</p>`+(list.length?`<div class="grid">${list.map((r,n)=>tab==='SKIP'?`<div class="card" style="--c:var(--y)"><div class="ch"><div><div class="tk">${r.symbol}</div><div class="px">$${r.price.toFixed(2)}</div></div><div class="conf">Score ${r.score}</div></div></div>`:card(r,n)).join('')}</div>`:`<div class="empty">Nothing qualifies in this list right now.${tab==='CALL'&&m&&m.regime<-.3?'<br>That\'s expected: the market is falling, so the model won\'t suggest calls.':''}</div>`);
+  document.querySelectorAll('.card').forEach(c=>open.has(c.querySelector('.tk')?.textContent)&&c.classList.add('open'));
+}
+const post=(a,b)=>fetch('/api/paper/'+a,{method:'POST',headers:{'Content-Type':'application/json','X-App':'1'},body:JSON.stringify(b||{})}).then(r=>r.json());
+const usd=x=>(x<0?'-':'')+'$'+Math.abs(x).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+const cls=x=>x>0?'pos':x<0?'neg':'';
+async function arm(sym,btn){btn.disabled=true;const r=await post('arm',{symbol:sym});btn.textContent=r.error?'⚠ '+r.error:'✓ Added to Practice';if(!r.error){tab='PRACTICE';render()}}
+async function act(a,b){const r=await post(a,b);if(r.error)alert(r.error);else showPaper(r)}
+async function loadPaper(){showPaper(await(await fetch('/api/paper')).json())}
+const ago=t=>{const s=(Date.now()-new Date(t))/1000;return s<90?'just now':s<3600?Math.round(s/60)+' min ago':s<86400?Math.round(s/3600)+' hr ago':new Date(t).toLocaleDateString(undefined,{month:'short',day:'numeric'})};
+const fmtExp=d=>new Date(d+'T12:00:00').toLocaleDateString(undefined,{month:'short',day:'numeric'});
+const logIcon=m=>/BOUGHT/.test(m)?'🟢':/sold/.test(m)?'💰':/Armed/.test(m)?'🎯':/Cancelled|expired/.test(m)?'✖️':/skipped/.test(m)?'⏭️':/Auto/.test(m)?'⚙️':'•';
+function showPaper(p){
+  if(tab!=='PRACTICE')return;
+  const s=p.stats,empty=m=>`<div class="empty" style="padding:22px">${m}</div>`;
+  const head=(a,b,pill,c)=>`<div class="rl"><b class="rt">${a}</b><span class="pill" style="background:color-mix(in srgb,var(--${c}) 18%,transparent);color:var(--${c})">${pill}</span></div>`;
+  const pending=p.pending.map(x=>{const c=x.type==='CALL',k=c?'g':'r';return `<div class="rw" style="--c:var(--${k})">${head(x.symbol,'',x.type,k)}
+    <div class="rm"><div class="rh">Buy a $${x.strike} ${x.type.toLowerCase()} · expires ${fmtExp(x.expiry)}</div>
+    <div class="rs">⏳ <b>Waiting.</b> Buys if ${x.symbol} ${c?'rises above':'falls below'} <b>$${x.trigger}</b> (after 9:00 AM CT). Skips it if the stock goes past $${x.chaseLimit}.</div></div>
+    <div class="rr"><button class="more" onclick="act('cancel',{id:${x.id}})">Cancel</button></div></div>`}).join('');
+  const open=p.open.map(x=>{const k=x.unrealized>=0?'g':'r',now=x.mark??x.entry,pct=(now/x.entry-1)*100,call=x.type==='CALL';return `<div class="rw" style="--c:var(--${k})">${head(x.symbol,'',x.type,call?'g':'r')}
+    <div class="rm"><div class="rh">${x.remaining} × $${x.strike} ${x.type.toLowerCase()} · expires ${fmtExp(x.expiry)}</div>
+    <div class="rs">Bought at <b>$${x.entry.toFixed(2)}</b> → now <b>$${now.toFixed(2)}</b> (${pct>=0?'+':''}${pct.toFixed(0)}%)${x.tp?' · half already sold, stop moved to breakeven':''}<br>
+    Stock now $${x.stockNow?.toFixed(2)} · sells if it reaches <b>$${x.target}</b> (win) or <b>$${x.stop}</b> (loss) · out by Thu 2:30 PM CT</div></div>
+    <div class="rr"><div class="pl ${cls(x.unrealized)}">${usd(x.unrealized)}</div><button class="more" onclick="act('close',{id:${x.id}})">Close now</button></div></div>`}).join('');
+  const closed=p.closed.map(x=>{const k=x.pnl>0?'g':'r';return `<div class="rw" style="--c:var(--${k})">${head(x.symbol,'',x.type,x.type==='CALL'?'g':'r')}
+    <div class="rm"><div class="rh">${x.contracts} × $${x.strike} ${x.type.toLowerCase()} · ${x.pnl>0?'Win':'Loss'}</div>
+    <div class="rs">Bought at $${x.entry.toFixed(2)} · ended ${ago(x.closedAt)} · reason: ${esc(x.exitReason)}</div></div>
+    <div class="rr"><div class="pl ${cls(x.pnl)}">${usd(x.pnl)}</div></div></div>`}).join('');
+  $('out').innerHTML=`<p class="lead">Pretend trades with live prices, using the same rules as the cards. No real money. It includes the $0.65 per-contract fee and checks every 2 minutes while the market is open (<b>${p.marketOpen?'open now':'closed now'}</b>), as long as this program is running.</p>
+  <div class="hero" style="--c:var(--acc);padding:18px 22px"><div class="stats" style="margin:0">
+   <div class="stat">Practice account<b style="font-size:22px">${usd(p.equity)}</b></div>
+   <div class="stat">Total profit / loss<b style="font-size:22px" class="${cls(p.pnl)}">${usd(p.pnl)}</b></div>
+   <div class="stat">Win rate<b style="font-size:22px">${s.winRate==null?'–':s.winRate+'%'}</b></div>
+   <div class="stat">Finished trades<b style="font-size:22px">${s.trades}</b></div>
+   <div class="stat">Average win / loss<b style="font-size:22px">${s.avgWin==null?'–':usd(s.avgWin)} / ${s.avgLoss==null?'–':usd(s.avgLoss)}</b></div></div></div>
+  <div class="tools" style="align-items:center">
+   <label class="swrow"><span class="sw"><input type="checkbox" ${p.settings.auto?'checked':''} onchange="act('auto',{on:this.checked})"><i></i></span><span><b>Auto-practice</b><br><span class="px">Automatically adds the top 3 picks (70%+ confidence) on Mon–Wed mornings</span></span></label>
+   <span class="grow"></span><button class="more" onclick="if(confirm('Erase all practice trades and start over?'))act('reset',{balance:$('acct').value,riskPct:$('risk').value})">↺ Start over with $${$('acct').value}</button></div>
+  <div class="psec"><h3>⏳ Waiting to buy <small>${p.pending.length}</small></h3></div>${pending?`<div class="rows">${pending}</div>`:empty('No trades waiting. Click “Practice this trade” on any pick.')}
+  <div class="psec"><h3>📊 Open trades <small>${p.open.length}</small></h3></div>${open?`<div class="rows">${open}</div>`:empty('No open trades yet. A waiting trade becomes open when its buy price is hit.')}
+  <div class="psec"><h3>✅ Finished trades <small>${p.closed.length}</small></h3></div>${closed?`<div class="rows">${closed}</div>`:empty('Finished trades and their results will show here.')}
+  <div class="psec"><h3>🕒 Activity</h3></div><div class="logl">${p.log.map(l=>`<div><span>${logIcon(l.m)}</span><span>${esc(l.m)}</span><em>${ago(l.t)}</em></div>`).join('')||'<div class="px">Nothing yet.</div>'}</div>`;
+}
+setInterval(()=>{if(tab==='PRACTICE')loadPaper()},30000);
+async function run(){
+  $('out').innerHTML='<div class="grid"><div class="skeleton"></div><div class="skeleton"></div></div>';
+  $('go').textContent='Scanning…';
+  try{const q=$('t').value.trim();last=await(await fetch('/api/analyze'+(q?'?tickers='+encodeURIComponent(q):''))).json();tab=null;render()}
+  catch(e){$('out').innerHTML='<div class="empty">Could not load data. Is the server running?</div>'}
+  $('go').textContent='Scan';
+}
+$('go').onclick=run;$('t').addEventListener('keydown',e=>{if(e.key==='Enter')run()});$('acct').oninput=$('risk').oninput=$('sort').onchange=$('afford').onchange=render;
+clock();setInterval(clock,30000);run();
+</script></body></html>
